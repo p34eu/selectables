@@ -1,0 +1,11 @@
+.*.swp
+.vsc*
+._*
+.DS_Store
+.git
+.npmrc
+.lock-wscript
+npm-debug.log
+npm-debug.lo*
+desktop.ini
+*~
