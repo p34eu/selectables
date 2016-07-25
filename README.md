@@ -24,13 +24,14 @@ dr = new Selectables({
  
  
 //later
-dr.enable();
- 
-// disable
 dr.disable();
+ 
+// enable again
+dr.enable();
 
 // set options
 dr.options.key='altKey';
+
 ```
 ##Options and Callbacks:
 
