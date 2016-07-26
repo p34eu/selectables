@@ -16,7 +16,7 @@ dr = new Selectables({
       enabled: true, 
       onSelect:function(element){
           element.classList.add('selected');
-      }
+      },
       stop: function (event) {
           console.log(document.getElementsByClassName(dr.options.selectedClass).length + " elements selected");
       }
