@@ -68,3 +68,5 @@ onDeselect: function (el) {
 }
                     
 ```
+## Notes
+While is perfectly ok to set dragging area(zone) to whole document, please keep in mind that when script is active, it applies "noselect" class to the zone, to avoid unwated text selection. In this case is better to keep script active only when needed.
