@@ -1,5 +1,5 @@
 /* 
- *   Selectables    v. 1.0.12
+ *   Selectables    v. 1.0.13
  *   https://github.com/p34eu/Selectables.git 
  */
 
@@ -117,7 +117,7 @@ function Selectables(opts) {
         this.y = e.pageY;
         if (!rb()) {
             var gh = document.createElement('div');
-            gh.id = 'rectBox';
+            gh.id = 's-rectBox';
             gh.innerHTML = '<span></span>';
             gh.style.left = Math.min(e.pageX, this.x) + 'px';
             gh.style.top = Math.min(e.pageY, this.y) + 'px';
@@ -126,7 +126,7 @@ function Selectables(opts) {
     };
 
     var rb = function () {
-        return document.getElementById('rectBox');
+        return document.getElementById('s-rectBox');
     };
 
     var cross = function (a, b) {
