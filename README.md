@@ -1,13 +1,17 @@
 # Selectables
 
-Select html elements in webpage with dragging like on computer's desktop. 
+Select html elements in webpage with mouse like on computer's desktop. 
 
 Simple and lightweight pure javascript implementation without external lib dependancies.
 
 Created in effort to drop code size and dependancy on jquery && jquery.ui for small projects.
+<<<<<<< HEAD
 
 
 ## <a href="https://jsfiddle.net/ovzxm6mt/53/" target="_blank">Demo</a>
+=======
+## [Demo](https://jsfiddle.net/ovzxm6mt/50/ "Try it")
+>>>>>>> efb1eedc3739cf4d3edc2f0eac41dc4f06ecadbe
 
 ## Usage:
 
@@ -83,7 +87,7 @@ dr.options.key='altKey';
 
 Toggle multiple  checkboxes in list
 
-``` js
+``` jss
 onSelect: function (el) {
     el.querySelector('input').setAttribute('checked', 'checked');
 },
@@ -95,7 +99,8 @@ onDeselect: function (el) {
 ## Notes
 
 1. Multiple instances on different zones and items are possible, but it is good to enable them only when needed.
-
+ 
 2. When selecting, "noselect" class  gets applied  to the zone, to avoid unwanted text selections.
+ 
 
 
