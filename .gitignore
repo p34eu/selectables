@@ -5,6 +5,6 @@
 .git
 .npmrc
 .lock-wscript
-npm-debug.lo*
+npm-debug.l*
 desktop.ini
 *~
