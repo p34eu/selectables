@@ -1,5 +1,5 @@
 /* 
- *   Selectables    v. 1.0.11
+ *   Selectables    v. 1.0.12
  *   https://github.com/p34eu/Selectables.git 
  */
 
@@ -8,13 +8,23 @@
 function Selectables(opts) {
 
     var defaults = {
-        // root element whith selectables.
+        // ID of the element whith selectables.
         zone: "#wrapper",
         //  items to be selectable .list-group, #id > .class,'htmlelement' - valid querySelectorAll
         elements: "li",
         // class name to apply to seleted items        
         selectedClass: 'active',
-        //  event on selection start        
+        // activate using optional key
+        key: false, //'altKey,ctrlKey,metaKey,false   
+
+        // add more to selection
+        moreUsing: 'shiftKey', //altKey,ctrlKey,metaKey
+
+        //false to .enable() at later time   
+        enabled: true,
+        //print some info in browser console
+        debug: true,
+        //  event on selection start  
         start: function (e) {
             this.selectables.m('Starting selection on \'' + this.elements + '\' in \'' + this.zone + '\'');
         },
@@ -30,16 +40,7 @@ function Selectables(opts) {
         // event fired on every item when selected.
         onDeselect: function (el) {
             this.selectables.m('ondeselect', el);
-        },
-        // activate using optional key
-        key: false, //'altKey,ctrlKey,metaKey,false   
-
-        // add more to selection
-        moreUsing: 'shiftKey', //altKey,ctrlKey,metaKey
-
-        //false to .enable() at later time   
-        enabled: true,
-        debug: true, //print some info in browser console
+        }
     };
 
     var extend = function extend(a, b) {
@@ -68,17 +69,17 @@ function Selectables(opts) {
     this.y = false;
     this.on = false;
     var self = this;
-    
-    this.enable = function () { 
+
+    this.enable = function () {
         if (this.on) {
             throw new Error(this.constructor.name + " :: is alredy enabled");
             return;
         }
         this.zone = document.querySelector(this.options.zone);
         if (!this.zone) {
-            throw new Error(this.constructor.name + " :: no zone defined in options ");
+            throw new Error(this.constructor.name + " :: no zone defined in options. Please use element with ID");
         }
-        
+
         this.items = document.querySelectorAll(this.options.zone + ' ' + this.options.elements);
         this.disable();
         this.zone.addEventListener('mousedown', self.rectOpen);
@@ -98,10 +99,11 @@ function Selectables(opts) {
     };
 
     this.rectOpen = function (e) {
-        self.options.start && self.options.start(e);
         if (self.options.key && !e[self.options.key]) {
             return;
         }
+        document.body.classList.add('s-noselect');
+        self.options.start && self.options.start(e);
         if (!e[self.options.moreUsing]) {
             var sc = self.options.selectedClass;
             self.foreach(self.items, function (el) {
@@ -110,7 +112,7 @@ function Selectables(opts) {
         }
         self.zone.addEventListener('mousemove', self.rectDraw);
         window.addEventListener('mouseup', self.select);
-        document.body.classList.add('noselect');
+
         this.x = e.pageX;
         this.y = e.pageY;
         if (!rb()) {
@@ -143,6 +145,10 @@ function Selectables(opts) {
             return;
         }
         self.x = self.y = false;
+        a.parentNode.removeChild(a);
+        document.body.classList.remove('s-noselect');
+        window.removeEventListener('mouseup', self.select);
+        self.zone.removeEventListener('mousemove', self.rectDraw);
         self.foreach(self.items, function (el) {
             if (cross(a, el) === true) {
                 var s = self.options.selectedClass;
@@ -155,10 +161,6 @@ function Selectables(opts) {
                 }
             }
         });
-        a.parentNode.removeChild(a);
-        document.body.classList.remove('noselect');
-        window.removeEventListener('mouseup', self.select);
-        self.zone.removeEventListener('mousemove', self.rectDraw);
         self.options.stop && self.options.stop(e);
     }
 
@@ -173,7 +175,6 @@ function Selectables(opts) {
             g.style.left = e.pageX + 'px';
         } else if (e.pageY <= this.y && e.pageX >= this.x) {
             g.style.top = e.pageY + 'px';
-
         } else if (e.pageY < this.y && e.pageX < this.x) {
             g.style.left = e.pageX + 'px';
             g.style.top = e.pageY + 'px';

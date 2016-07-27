@@ -15,9 +15,9 @@ Created in effort to drop code size and dependancy on jquery && jquery.ui for sm
 
 dr = new Selectables({
       zone:'#div',
-      elements: 'td',     
+      elements: 'li',     
       onSelect:function(element){
-         console.log(element)
+         console.log(element);
       }
 });
  
@@ -91,6 +91,14 @@ onDeselect: function (el) {
     el.querySelector('input').removeAttribute('checked');
 }
                     
+```
+## Install
+```sh
+npm install selectables
+```
+or
+```sh
+bower install selectables 
 ```
 ## Notes
 
