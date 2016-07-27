@@ -1,19 +1,15 @@
 .selected { 
-  background-color: rgba(100,100,200,.05);
+    background-color: rgba(100,100,200,.05);
 }       
-  
+
 .noselect { 
-  -webkit-touch-callout: none; -webkit-user-select: none;
-  -khtml-user-select: none; -moz-user-select: none;
-  -ms-user-select: none; user-select: none;
+    -webkit-touch-callout: none;-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;
 }
 
 #rectBox { 
-  z-index: 1020; cursor: crosshair;position:absolute !important;display:block !important;
+    z-index: 1020; cursor: crosshair;position:absolute !important;display:block !important; border-radius: 50%;
 }
 
 #rectBox > span {
-  background-color: rgba(0, 28, 190, 0.01);   border:1px solid #cbd3e3;
-  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2),0 2px 4px 0 rgba(0,0,0,0.19);
-  width: 100%;  height: 100%;  float: right; 
+    background-color: rgba(0, 28, 190, 0.01);   border:2px dashed #cbd3e3; width: 100%;  height: 100%;  float: right; 
 }

@@ -1,30 +1,45 @@
-
 /* 
-Selectables
-v. 1.0.4
-https://github.com/p34eu/Selectables.git 
-*/
+ *   Selectables    v. 1.0.5
+ *   https://github.com/p34eu/Selectables.git 
+ */
 
 "use strict";
 
 function Selectables(opts) {
 
     var defaults = {
-        zone:           "#wrapper",           // element that contain selectables.
-        elements:       "li",             //  .list-group, #id > .class,'htmlelement' - valid querySelectorAll
-        selectedClass: 'selected',  //  just class name without the dot
+        // root element whith selectables.
+        zone: "#wrapper",
+        //  items to be selectable .list-group, #id > .class,'htmlelement' - valid querySelectorAll
+        elements: "li",
+        // class name to apply to seleted items        
+        selectedClass: 'active',
+        //  event on selection start        
+        start: function (e) {
+            this.selectables.m('Starting selection on \'' + this.elements + '\' in \'' + this.zone + '\'');
+        },
+        // event on selection end        
+        stop: function (e) {
+            this.selectables.m('Finished selecting   \'' + this.elements + '\' in \'' + this.zone + '\'');
+        },
+        // event fired on every item when selected.
+        onSelect: function (el) {
+            console.log(el)
+            this.selectables.m('onselect', el);
+        },
+        // event fired on every item when selected.
+        onDeselect: function (el) {
+            this.selectables.m('ondeselect', el);
+        },
+        // activate using optional key
+        key: false, //'altKey,ctrlKey,metaKey,false   
 
-        start:          null,                //  event on dragstart
-        stop:           null,                 // event on dragend
+        // add more to selection
+        moreUsing: 'shiftKey', //altKey,ctrlKey,metaKey
 
-        onSelect:       null,
-        onDeselect:     null,
-
-        key:            'altKey',              //'altKey,ctrlKey,metaKey,false      
-        moreUsing:      'shiftKey',      //altKey,ctrlKey,metaKey
-
-        enabled:        true,              //false to .enable() at later time            
-        debug:          false,               //print some info in browser console
+        //false to .enable() at later time   
+        enabled: true,
+        debug: true, //print some info in browser console
     };
 
     var extend = function extend(a, b) {
@@ -34,8 +49,7 @@ function Selectables(opts) {
         return a;
     };
 
-
-    var foreach = function (items, callback, scope) {
+    this.foreach = function (items, callback, scope) {
         if (Object.prototype.toString.call(items) === '[object Object]') {
             for (var prop in items) {
                 if (Object.prototype.hasOwnProperty.call(items, prop)) {
@@ -49,41 +63,52 @@ function Selectables(opts) {
         }
     }
 
-    this.options    = extend(defaults, opts || {});    
-    this.x          = false;
-    this.y          = false;
-    this.on         = false;
-    var self        = this;
+    this.options = extend(defaults, opts || {});
+    this.x = false;
+    this.y = false;
+    this.on = false;
+    this.items = document.querySelectorAll(this.options.zone + ' ' + this.options.elements);
+    this.zone = document.querySelector(this.options.zone);
+    var self = this;
 
     this.enable = function () { //console.trace(this.options);
         if (this.on) {
-            console.error(this.constructor.name + ":: is alredy enabled");
+            throw new Error(this.constructor.name + ":: is alredy enabled");
             return;
         }
-        var zone = document.querySelector(this.options.zone);
-        if (!zone) {
-            console.error(this.constructor.name + ":: no zone defined in options" + document.readyState + this.name);
+
+        if (!this.zone) {
+            throw new Error(this.constructor.name + ":: no zone defined in options ");
             return;
         }
-        document.querySelector(this.options.zone).addEventListener('mousedown', self.rectOpen);
+        this.zone.addEventListener('mousedown', self.rectOpen);
         this.on = true;
         return this;
     };
+
     this.disable = function () {
         this.on = false;
-        document.querySelector(this.options.zone).removeEventListener('mousedown', self.rectOpen);
+        this.zone.removeEventListener('mousedown', self.rectOpen);
         return this;
     };
+
     var offset = function (el) {
         var r = el.getBoundingClientRect();
-        return { top: r.top + document.body.scrollTop, left: r.left + document.body.scrollLeft }
+        return {top: r.top + document.body.scrollTop, left: r.left + document.body.scrollLeft}
     };
+
     this.rectOpen = function (e) {
+        self.options.start && self.options.start(e);
         if (self.options.key && !e[self.options.key]) {
             return;
         }
-        self.options.start && self.options.start();
-        document.querySelector(self.options.zone).addEventListener('mousemove', self.rectDraw);
+        if (!e[self.options.moreUsing]) {
+            var sc = self.options.selectedClass;
+            self.foreach(self.items, function (el) {
+                el.classList.remove(sc);
+            });
+        }
+        self.zone.addEventListener('mousemove', self.rectDraw);
         window.addEventListener('mouseup', self.select);
         document.body.classList.add('noselect');
         this.x = e.pageX;
@@ -97,39 +122,44 @@ function Selectables(opts) {
             document.body.appendChild(gh);
         }
     };
+
     var rb = function () {
         return document.getElementById('rectBox');
-    }
-    this.cross = function (a, b) {
-        var aTop = offset(a).top, aLeft = offset(a).left, bTop = offset(b).top, bLeft = offset(b).left; return !(((aTop + a.offsetHeight) < (bTop)) || (aTop > (bTop + b.offsetHeight)) || ((aLeft + a.offsetWidth) < bLeft) || (aLeft > (bLeft + b.offsetWidth)));
     };
+
+    var cross = function (a, b) {
+        var aTop = offset(a).top, aLeft = offset(a).left, bTop = offset(b).top, bLeft = offset(b).left;
+        return !(((aTop + a.offsetHeight) < (bTop)) || (aTop > (bTop + b.offsetHeight)) || ((aLeft + a.offsetWidth) < bLeft) || (aLeft > (bLeft + b.offsetWidth)));
+    };
+
     this.m = function (m) {
-        if (this.options.debug) {
-            console.log(this.constructor.name + " :: " + m);
-        }
+        this.options.debug && window.console && console.log(this.constructor.name + " :: " + m);
+
     };
+
     this.select = function (e) {
-        self.m('checking for selected ' + self.options.elements + ' in ' + self.options.zone);
-        self.x = self.y = false;
         var a = rb();
         if (!a) {
             return;
         }
-        foreach(document.querySelectorAll(self.options.zone + ' ' + self.options.elements), function (el) {
-            if (self.cross(a, el) === true) {
-                el.classList.add(self.options.selectedClass);
-                self.options.onSelect && self.options.onSelect(el);
-            } else {
-                if (self.options.moreUsing && e[self.options.moreUsing]) {
-                    el.classList.remove(self.options.selectedClass); self.options.onDeselect && self.options.onDeselect(el);
+        self.x = self.y = false;
+        self.foreach(self.items, function (el) {
+            if (cross(a, el) === true) {
+                var s = self.options.selectedClass;
+                if (el.classList.contains(s)) {
+                    el.classList.remove(s);
+                    self.options.onDeselect && self.options.onDeselect(el);
+                } else {
+                    el.classList.add(s);
+                    self.options.onSelect && self.options.onSelect(el);
                 }
             }
         });
         a.parentNode.removeChild(a);
         document.body.classList.remove('noselect');
         window.removeEventListener('mouseup', self.select);
-        document.querySelector(self.options.zone).removeEventListener('mousemove', self.rectDraw);
-        self.options.stop && self.options.stop();
+        self.zone.removeEventListener('mousemove', self.rectDraw);
+        self.options.stop && self.options.stop(e);
     }
 
     this.rectDraw = function (e) {
@@ -150,19 +180,10 @@ function Selectables(opts) {
         }
     }
 
+    this.options.selectables = this;
     if (this.options.enabled) {
         return this.enable();
     }
     return this;
 }
-/*
-document.addEventListener('DOMContentLoaded', function () {
-    ar = new Selectables({
-        elements: 'td',
-        enabled: true, 
-        stop: function () {
-            console.log(document.getElementsByClassName(ar.options.selectedClass).length + " elements selected");
-        }
-    });
-});
-*/
+
