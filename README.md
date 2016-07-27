@@ -12,13 +12,9 @@ Created in effort to drop code size and dependancy on jquery && jquery.ui for sm
 
 dr = new Selectables({
       zone:'#div',
-      elements: 'td',
-      enabled: true, 
+      elements: 'td',     
       onSelect:function(element){
-          element.classList.add('selected');
-      },
-      stop: function (event) {
-          console.log(document.getElementsByClassName(dr.options.selectedClass).length + " elements selected");
+         console.log(element)
       }
 });
  
@@ -37,23 +33,47 @@ dr.options.key='altKey';
 
 ``` js
 {
-    zone: "#wrapper",               // Element that contains selectable items
-    elements: "td",                 // Selectables
-    debug: true,                    // print some info in console
+    // root element whith selectables.
+    zone: "#wrapper",
 
-    onSelect: null,                 // callback on each selected element //function(element){}
-    onDeselect: null,               //callback on each deselected element
+    //  items to be selectable .list-group, #id > .class,'htmlelement' - valid querySelectorAll
+    elements: "li",
 
-    start:null,                     //event trigered on start
-    stop:null                       //event trigered on end ,function(event){}
+    // class name to apply to seleted items        
+    selectedClass: 'active',
 
-    selectedClass: 'selected',      // class for selected elements
-    
-    key: 'altKey',                  //'altKey'//altKey,ctrlKey,metaKey,false  - When false, works without modifier key.
+    //  event on selection start        
+    start: function (e) {
+        this.selectables.m('Starting selection on \'' + this.elements + '\' in \'' + this.zone + '\'');
+    },
 
-    moreUsing: 'shiftKey',          //altKey,ctrlKey,metaKey          - allows to expand selection with more than one drag                    action. 
+    // event on selection end        
+    stop: function (e) {
+        this.selectables.m('Finished selecting   \'' + this.elements + '\' in \'' + this.zone + '\'');
+    },
 
-    enabled: true                   //false to .enable() at later time  - .
+    // event fired on every item when selected.
+    onSelect: function (el) {
+        console.log(el)
+        this.selectables.m('onselect', el);
+    },
+
+    // event fired on every item when selected.
+    onDeselect: function (el) {
+        this.selectables.m('ondeselect', el);
+    },
+
+    // activate using optional key
+    key: false, //'altKey,ctrlKey,metaKey,false   
+
+    // add more to selection
+    moreUsing: 'shiftKey', //altKey,ctrlKey,metaKey
+
+    //false to .enable() at later time   
+
+    enabled: true,
+
+    debug: true, //print some info in browser console
 }
 ```
 ## Example usage
@@ -69,4 +89,8 @@ onDeselect: function (el) {
                     
 ```
 ## Notes
-While is perfectly ok to set dragging area(zone) to whole document, please keep in mind that when script is active, it applies "noselect" class to the zone, to avoid unwated text selection. In this case is better to keep script active only when needed.
+
+1. Multiple instances on different zones and items are possible, but it is good to enable them only when needed.
+2. When selecting, "noselect" gets applied class to the zone, to avoid unwanted text selections.
+
+
