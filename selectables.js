@@ -67,20 +67,20 @@ function Selectables(opts) {
     this.x = false;
     this.y = false;
     this.on = false;
-    this.items = document.querySelectorAll(this.options.zone + ' ' + this.options.elements);
-    this.zone = document.querySelector(this.options.zone);
     var self = this;
-
-    this.enable = function () { //console.trace(this.options);
+    
+    this.enable = function () { 
         if (this.on) {
             throw new Error(this.constructor.name + ":: is alredy enabled");
             return;
         }
-
+        this.zone = document.querySelector(this.options.zone);
         if (!this.zone) {
             throw new Error(this.constructor.name + ":: no zone defined in options ");
-            return;
         }
+        
+        this.items = document.querySelectorAll(this.options.zone + ' ' + this.options.elements);
+        this.disable();
         this.zone.addEventListener('mousedown', self.rectOpen);
         this.on = true;
         return this;
