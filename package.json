@@ -1,6 +1,6 @@
 {
   "name": "selectables",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Select html elements on webpage using mouse",
   "main": "selectables.js",
   "scripts": {
