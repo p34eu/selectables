@@ -100,11 +100,11 @@ function Selectables(opts) {
     };
 
     this.rectOpen = function (e) {
+        self.options.start && self.options.start(e);
         if (self.options.key && !e[self.options.key]) {
             return;
-        }
+        }        
         document.body.classList.add('s-noselect');
-        self.options.start && self.options.start(e);
         if (!e[self.options.moreUsing]) {
             var sc = self.options.selectedClass;
             self.foreach(self.items, function (el) {
