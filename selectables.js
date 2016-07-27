@@ -1,5 +1,5 @@
 /* 
- *   Selectables    v1.0.14
+ *   Selectables    v1.1.0
  *   https://github.com/p34eu/Selectables.git 
  */
 
@@ -31,6 +31,7 @@ function Selectables(opts) {
         // event on selection end        
         stop: function (e) {
             this.selectables.m('Finished selecting   \'' + this.elements + '\' in \'' + this.zone + '\'');
+            console.log(document.getElementsByClassName('active'))
         },
         // event fired on every item when selected.
         onSelect: function (el) {
@@ -144,14 +145,13 @@ function Selectables(opts) {
         if (!a) {
             return;
         }
-        self.x = self.y = false;
-        a.parentNode.removeChild(a);
+        self.x = self.y = false;  
         document.body.classList.remove('s-noselect');
         window.removeEventListener('mouseup', self.select);
         self.zone.removeEventListener('mousemove', self.rectDraw);
+        var s = self.options.selectedClass;
         self.foreach(self.items, function (el) {
             if (cross(a, el) === true) {
-                var s = self.options.selectedClass;
                 if (el.classList.contains(s)) {
                     el.classList.remove(s);
                     self.options.onDeselect && self.options.onDeselect(el);
@@ -159,8 +159,11 @@ function Selectables(opts) {
                     el.classList.add(s);
                     self.options.onSelect && self.options.onSelect(el);
                 }
+            } else {
+                console.log(s)
             }
         });
+        a.parentNode.removeChild(a);
         self.options.stop && self.options.stop(e);
     }
 
