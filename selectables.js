@@ -1,6 +1,6 @@
-/* 
- *   Selectables    v1.1.0
- *   https://github.com/p34eu/Selectables.git 
+/*
+ *   Selectables    v1.1.3
+ *   https://github.com/p34eu/Selectables.git
  */
 
 "use strict";
@@ -8,36 +8,44 @@
 function Selectables(opts) {
 
     var defaults = {
+
         // ID of the element whith selectables.
         zone: "#wrapper",
+
         //  items to be selectable .list-group, #id > .class,'htmlelement' - valid querySelectorAll
-        elements: "li",
-        // class name to apply to seleted items        
+        elements: "a",
+
+        // class name to apply to seleted items
         selectedClass: 'active',
+
         // activate using optional key
-        key: false, //'altKey,ctrlKey,metaKey,false   
+        key: false, //'altKey,ctrlKey,metaKey,false
 
         // add more to selection
         moreUsing: 'shiftKey', //altKey,ctrlKey,metaKey
 
-        //false to .enable() at later time   
+        //false to .enable() at later time
         enabled: true,
+
         //print some info in browser console
         debug: true,
-        //  event on selection start  
+        //  event on selection start
         start: function (e) {
-            this.selectables.m('Starting selection on \'' + this.elements + '\' in \'' + this.zone + '\'');
+            this.selectables.m('Starting selection on ' + this.elements + ' in ' + this.zone);
         },
-        // event on selection end        
+
+        // event on selection end
         stop: function (e) {
-            this.selectables.m('Finished selecting   \'' + this.elements + '\' in \'' + this.zone + '\'');
+            this.selectables.m('Finished selecting  ' + this.elements + ' in ' + this.zone );
             console.log(document.getElementsByClassName('active'))
         },
+
         // event fired on every item when selected.
         onSelect: function (el) {
             console.log(el)
             this.selectables.m('onselect', el);
         },
+
         // event fired on every item when selected.
         onDeselect: function (el) {
             this.selectables.m('ondeselect', el);
@@ -70,7 +78,6 @@ function Selectables(opts) {
     this.y = false;
     this.on = false;
     var self = this;
-
     this.enable = function () {
         if (this.on) {
             throw new Error(this.constructor.name + " :: is alredy enabled");
@@ -80,7 +87,6 @@ function Selectables(opts) {
         if (!this.zone) {
             throw new Error(this.constructor.name + " :: no zone defined in options. Please use element with ID");
         }
-
         this.items = document.querySelectorAll(this.options.zone + ' ' + this.options.elements);
         this.disable();
         this.zone.addEventListener('mousedown', self.rectOpen);
@@ -89,8 +95,8 @@ function Selectables(opts) {
     };
 
     this.disable = function () {
-        this.on = false;
         this.zone.removeEventListener('mousedown', self.rectOpen);
+        this.on = false;
         return this;
     };
 
@@ -103,7 +109,7 @@ function Selectables(opts) {
         self.options.start && self.options.start(e);
         if (self.options.key && !e[self.options.key]) {
             return;
-        }        
+        }
         document.body.classList.add('s-noselect');
         if (!e[self.options.moreUsing]) {
             var sc = self.options.selectedClass;
@@ -113,7 +119,6 @@ function Selectables(opts) {
         }
         self.zone.addEventListener('mousemove', self.rectDraw);
         window.addEventListener('mouseup', self.select);
-
         this.x = e.pageX;
         this.y = e.pageY;
         if (!rb()) {
@@ -145,7 +150,7 @@ function Selectables(opts) {
         if (!a) {
             return;
         }
-        self.x = self.y = false;  
+        self.x = self.y = false;
         document.body.classList.remove('s-noselect');
         window.removeEventListener('mouseup', self.select);
         self.zone.removeEventListener('mousemove', self.rectDraw);
@@ -190,4 +195,3 @@ function Selectables(opts) {
     }
     return this;
 }
-

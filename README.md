@@ -1,13 +1,11 @@
 # Selectables
 
-Select html elements in webpage with mouse like on computer's desktop. 
+Select html elements in webpage with mouse like computer's desktop icons. 
 
-Simple and lightweight pure javascript implementation without external lib dependancies.
-
-Created in effort to drop code size and dependancy on jquery && jquery.ui for small projects.
+Simple js without external dependancies. 
 
 
-## <a href="https://jsfiddle.net/ovzxm6mt/53/" target="_blank">Demo</a>
+## <a href="https://jsfiddle.net/ovzxm6mt/54/" target="_blank">Demo</a>
 
 ## Usage:
 
@@ -108,3 +106,5 @@ bower install selectables
  
 
 
+## Why?
+Created in effort to drop code size and dependancy on jquery && jquery.ui for small projects.
