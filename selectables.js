@@ -1,5 +1,5 @@
 /*
- *   Selectables    v1.1.3
+ *   Selectables    v1.1.16
  *   https://github.com/p34eu/Selectables.git
  */
 
