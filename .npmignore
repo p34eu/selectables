@@ -3,6 +3,7 @@
 .DS_Store
 .git
 .npmrc
+*.sh
 .lock-wscript
 npm-debug.log
 desktop.ini
