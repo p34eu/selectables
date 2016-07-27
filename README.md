@@ -1,6 +1,6 @@
 # Selectables
 
-Select html elements in webpage with dragging like on computer's desktop. 
+Select html elements in webpage with mouse like on computer's desktop. 
 
 Simple and lightweight pure javascript implementation without external lib dependancies.
 
@@ -45,12 +45,12 @@ dr.options.key='altKey';
 
     //  event on selection start        
     start: function (e) {
-        this.selectables.m('Starting selection on \'' + this.elements + '\' in \'' + this.zone + '\'');
+        this.selectables.m('Starting selection on ' + this.elements + ' in ' + this.zone );
     },
 
     // event on selection end        
     stop: function (e) {
-        this.selectables.m('Finished selecting   \'' + this.elements + '\' in \'' + this.zone + '\'');
+        this.selectables.m('Finished selecting   ' + this.elements + ' in ' + this.zone );
     },
 
     // event fired on every item when selected.
@@ -92,6 +92,6 @@ onDeselect: function (el) {
 ## Notes
 
 1. Multiple instances on different zones and items are possible, but it is good to enable them only when needed.
-2. When selecting, "noselect" gets applied class to the zone, to avoid unwanted text selections.
+2. When selecting, "noselect" class gets applied  to the zone, to avoid unwanted text selections.
 
 
