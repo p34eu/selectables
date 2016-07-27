@@ -5,8 +5,10 @@ Select html elements in webpage with dragging like on computer's desktop.
 Simple and lightweight pure javascript implementation without external lib dependancies.
 
 Created in effort to drop code size and dependancy on jquery && jquery.ui for small projects.
-## Demo
-[ https://jsfiddle.net/ovzxm6mt/50/ ]
+
+
+## <a href="https://jsfiddle.net/ovzxm6mt/53/" target="_blank">Demo</a>
+
 ## Usage:
 
 ``` js 
@@ -45,12 +47,12 @@ dr.options.key='altKey';
 
     //  event on selection start        
     start: function (e) {
-        this.selectables.m('Starting selection on \'' + this.elements + '\' in \'' + this.zone + '\'');
+        this.selectables.m('Starting selection on ' + this.elements + ' in ' + this.zone);
     },
 
     // event on selection end        
     stop: function (e) {
-        this.selectables.m('Finished selecting   \'' + this.elements + '\' in \'' + this.zone + '\'');
+        this.selectables.m('Finished selecting   ' + this.elements + ' in ' + this.zone);
     },
 
     // event fired on every item when selected.
@@ -78,6 +80,7 @@ dr.options.key='altKey';
 }
 ```
 ## Example usage
+
 Toggle multiple  checkboxes in list
 
 ``` js
@@ -92,6 +95,7 @@ onDeselect: function (el) {
 ## Notes
 
 1. Multiple instances on different zones and items are possible, but it is good to enable them only when needed.
-2. When selecting, "noselect" gets applied class to the zone, to avoid unwanted text selections.
+
+2. When selecting, "noselect" class  gets applied  to the zone, to avoid unwanted text selections.
 
 
