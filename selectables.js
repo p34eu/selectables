@@ -71,12 +71,12 @@ function Selectables(opts) {
     
     this.enable = function () { 
         if (this.on) {
-            throw new Error(this.constructor.name + ":: is alredy enabled");
+            throw new Error(this.constructor.name + " :: is alredy enabled");
             return;
         }
         this.zone = document.querySelector(this.options.zone);
         if (!this.zone) {
-            throw new Error(this.constructor.name + ":: no zone defined in options ");
+            throw new Error(this.constructor.name + " :: no zone defined in options ");
         }
         
         this.items = document.querySelectorAll(this.options.zone + ' ' + this.options.elements);

@@ -6,7 +6,7 @@ Simple and lightweight pure javascript implementation without external lib depen
 
 Created in effort to drop code size and dependancy on jquery && jquery.ui for small projects.
 ## Demo
-[https://jsfiddle.net/ovzxm6mt/50/]
+[ https://jsfiddle.net/ovzxm6mt/50/ ]
 ## Usage:
 
 ``` js 
