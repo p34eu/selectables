@@ -5,7 +5,7 @@ Select elements in webpage with mouse.
 Simple js without external dependencies. 
 
 
-## <a href="https://jsfiddle.net/ovzxm6mt/60/" target="_blank">Demo</a>
+## <a href="https://jsfiddle.net/ovzxm6mt/62/" target="_blank">Demo</a>
 
 ## Usage:
 
