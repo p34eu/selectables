@@ -8,7 +8,9 @@ V=`npm version patch --no-git-tag`
 sed -i ""  '4s/.*/\ \*   $V/g' selectables.js
 
 [ -e npm-debug.log ] && rm npm-debug.log
-git commit -a -m $1
+
+git add -A && git commit -m "$1"
+ 
 
 bower version $V
 
