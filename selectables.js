@@ -1,7 +1,7 @@
 /*
  *   Selectables  
  *   
- *   v1.1.32
+ *   v1.1.33
  *       
  *   https://github.com/p34eu/Selectables.git
  */
