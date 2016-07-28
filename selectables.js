@@ -40,8 +40,6 @@ function Selectables(opts) {
         }
     }
     this.options = extend(defaults, opts || {});
-    this.x = false;
-    this.y = false;
     this.on = false;
     var self = this;
     this.enable = function () {
@@ -85,7 +83,6 @@ function Selectables(opts) {
                 el.classList.remove(self.options.selectedClass);
             }
         });
-
         self.ipos = [e.pageX, e.pageY];
         if (!rb()) {
             var gh = document.createElement('div');
