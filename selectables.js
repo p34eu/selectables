@@ -1,5 +1,5 @@
 /*
- *   Selectables    v1.1.16
+ *   Selectables    v1.1.17
  *   https://github.com/p34eu/Selectables.git
  */
 
@@ -164,8 +164,6 @@ function Selectables(opts) {
                     el.classList.add(s);
                     self.options.onSelect && self.options.onSelect(el);
                 }
-            } else {
-                console.log(s)
             }
         });
         a.parentNode.removeChild(a);

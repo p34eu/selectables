@@ -1,6 +1,6 @@
 # Selectables
 
-Select html elements in webpage with mouse like computer's desktop icons. 
+Select elements in webpage with mouse.
 
 Simple js without external dependancies. 
 
@@ -9,7 +9,7 @@ Simple js without external dependancies.
 
 ## Usage:
 
-``` js 
+```js 
 
 dr = new Selectables({
       zone:'#div',
@@ -18,8 +18,7 @@ dr = new Selectables({
          console.log(element);
       }
 });
- 
- 
+  
 //later
 dr.disable();
  
@@ -32,7 +31,7 @@ dr.options.key='altKey';
 ```
 ##Options and Callbacks:
 
-``` js
+```js
 {
     // root element whith selectables.
     zone: "#wrapper",
@@ -81,7 +80,7 @@ dr.options.key='altKey';
 
 Toggle multiple  checkboxes in list
 
-``` jss
+```js
 onSelect: function (el) {
     el.querySelector('input').setAttribute('checked', 'checked');
 },
@@ -98,6 +97,23 @@ or
 ```sh
 bower install selectables 
 ```
+
+## Example extension
+
+Custom method declared after selectables.js is loaded.
+
+```js
+    Selectables.prototype.selectAll = function () {
+        var opt = this.options;
+        this.foreach(document.querySelector(opt.zone).querySelectorAll(opt.elements), function (el) {
+            if(!el.classList.contains(opt.selectedClass){
+                el.classList.add(opt.selectedClass);
+                opt.onSelect && opt.onSelect(el);
+            }   
+        });
+    };
+```
+
 ## Notes
 
 1. Multiple instances on different zones and items are possible, but it is good to enable them only when needed.
