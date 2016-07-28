@@ -2,10 +2,10 @@
 
 Select elements in webpage with mouse.
 
-Simple js without external dependancies. 
+Simple js without external dependencies. 
 
 
-## <a href="https://jsfiddle.net/ovzxm6mt/54/" target="_blank">Demo</a>
+## <a href="https://jsfiddle.net/ovzxm6mt/60/" target="_blank">Demo</a>
 
 ## Usage:
 
@@ -44,23 +44,23 @@ dr.options.key='altKey';
 
     //  event on selection start        
     start: function (e) {
-        this.selectables.m('Starting selection on ' + this.elements + ' in ' + this.zone);
+       console.log('Starting selection on ' + this.elements + ' in ' + this.zone);
     },
 
     // event on selection end        
     stop: function (e) {
-        this.selectables.m('Finished selecting   ' + this.elements + ' in ' + this.zone);
+       console.log('Finished selecting   ' + this.elements + ' in ' + this.zone);
     },
 
     // event fired on every item when selected.
     onSelect: function (el) {
         console.log(el)
-        this.selectables.m('onselect', el);
+       console.log('onselect', el);
     },
 
     // event fired on every item when selected.
     onDeselect: function (el) {
-        this.selectables.m('ondeselect', el);
+       console.log('ondeselect', el);
     },
 
     // activate using optional key
@@ -71,9 +71,8 @@ dr.options.key='altKey';
 
     //false to .enable() at later time   
 
-    enabled: true,
+    enabled: true
 
-    debug: true, //print some info in browser console
 }
 ```
 ## Example usage
@@ -119,8 +118,9 @@ Custom method declared after selectables.js is loaded.
 1. Multiple instances on different zones and items are possible, but it is good to enable them only when needed.
  
 2. When selecting, "noselect" class  gets applied  to the zone, to avoid unwanted text selections.
+
  
 
 
 ## Why?
-Created in effort to drop code size and dependancy on jquery && jquery.ui for small projects.
+Created in effort to drop code size and dependency on jquery && jquery.ui for small projects.
