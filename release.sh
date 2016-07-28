@@ -5,7 +5,8 @@
 
 V=`npm version patch --no-git-tag`
 
-sed -i ""  '4s/.*/\ \*   {$V}/g' selectables.js
+sed -i ""  "4s/.*/\ \*   $V/g" selectables.js
+
 
 git add -A && git commit -m "$1"
 
