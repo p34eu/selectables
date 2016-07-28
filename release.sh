@@ -3,12 +3,12 @@
 # Release new version in npm and bower
 #
 
-V=`npm version patch --no-git-tag`
+V=`npm version $1 --no-git-tag`
 
 sed -i ""  "4s/.*/\ \*   $V/g" selectables.js
 
 
-git add -A && git commit -m "$1"
+git add -A && git commit -m "$2"
 
 bower version $V
 

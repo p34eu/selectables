@@ -1,26 +1,22 @@
 /*
  *   Selectables  
  *   
- *   v1.1.33
+ *   v1.2.0
  *       
  *   https://github.com/p34eu/Selectables.git
  */
 
-"use strict";
 
 function Selectables(opts) {
+    'use strict';
 
     var defaults = {
-
         // ID of the element whith selectables.
         zone: "#wrapper",
-
         //  items to be selectable .list-group, #id > .class,'htmlelement' - valid querySelectorAll
         elements: "a",
-
         // class name to apply to seleted items
         selectedClass: 'active',
-
         // activate using optional key
         key: false, //'altKey,ctrlKey,metaKey,false
 
@@ -29,26 +25,22 @@ function Selectables(opts) {
 
         //false to .enable() at later time
         enabled: true,
-
         //print some info in browser console
         debug: true,
         //  event on selection start
         start: function (e) {
             this.selectables.m('Starting selection on ' + this.elements + ' in ' + this.zone);
         },
-
         // event on selection end
         stop: function (e) {
-            this.selectables.m('Finished selecting  ' + this.elements + ' in ' + this.zone );
+            this.selectables.m('Finished selecting  ' + this.elements + ' in ' + this.zone);
             console.log(document.getElementsByClassName('active'))
         },
-
         // event fired on every item when selected.
         onSelect: function (el) {
             console.log(el)
             this.selectables.m('onselect', el);
         },
-
         // event fired on every item when selected.
         onDeselect: function (el) {
             this.selectables.m('ondeselect', el);
@@ -107,13 +99,20 @@ function Selectables(opts) {
         var r = el.getBoundingClientRect();
         return {top: r.top + document.body.scrollTop, left: r.left + document.body.scrollLeft}
     };
-
+    this.suspend = function (e) {   
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
     this.rectOpen = function (e) {
         self.options.start && self.options.start(e);
         if (self.options.key && !e[self.options.key]) {
             return;
         }
+        window.addEventListener('click', self.suspend);
+        window.addEventListener('drag', self.suspend);
         document.body.classList.add('s-noselect');
+
         if (!e[self.options.moreUsing]) {
             var sc = self.options.selectedClass;
             self.foreach(self.items, function (el) {
@@ -122,6 +121,7 @@ function Selectables(opts) {
         }
         self.zone.addEventListener('mousemove', self.rectDraw);
         window.addEventListener('mouseup', self.select);
+
         this.x = e.pageX;
         this.y = e.pageY;
         if (!rb()) {
@@ -155,8 +155,10 @@ function Selectables(opts) {
         }
         self.x = self.y = false;
         document.body.classList.remove('s-noselect');
-        window.removeEventListener('mouseup', self.select);
         self.zone.removeEventListener('mousemove', self.rectDraw);
+        window.removeEventListener('mouseup', self.select);        
+        window.removeEventListener('click', self.suspend);
+        window.removeEventListener('drag', self.suspend);
         var s = self.options.selectedClass;
         self.foreach(self.items, function (el) {
             if (cross(a, el) === true) {
