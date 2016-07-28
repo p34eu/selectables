@@ -3,9 +3,9 @@
 }
 
 #s-rectBox { 
-    z-index: 1020; cursor: crosshair;position:absolute !important;display:block !important; border-radius: 50%;
+    position: absolute;
+    z-index: 1090;
+    border:2px dashed #cbd3e3; 
 }
 
-#s-rectBox > span {
-    background-color: rgba(0, 28, 190, 0.01);   border:2px dashed #cbd3e3; width: 100%;  height: 100%;  float: right; 
-}
+ 

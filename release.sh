@@ -2,6 +2,7 @@
 #
 # Release new version in npm and bower
 #
+# Usage: ./release.sh minor "description here"   
 
 V=`npm version $1 --no-git-tag`
 
@@ -17,5 +18,7 @@ git push
 git push --tags
 
 npm publish
+
+#npm deprecate selectablesg@"< {$V}" "multiple bugs fixed in $V"
 
 
